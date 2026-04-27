@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<article class="single-blog">
+    <header class="blog-header">
+        <img src="<%= blog.image %>" alt="<%= blog.title %>" class="featured-image">
+        <h1><%= blog.title %></h1>
+        <div class="blog-meta">
+            <span>By <strong><%= blog.author.username %></strong></span>
+            <span>Published on <%= new Date(blog.createdAt).toDateString() %></span>
+        </div>
+    </header>
+
+    <div class="blog-body">
+        <%= blog.content %>
+    </div>
+
+    <% if (user && user._id.toString() === blog.author._id.toString()) { %>
+        <div class="blog-actions">
+            <a href="/blogs/<%= blog._id %>/edit" class="btn-edit">Edit Post</a>
+            <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" class="delete-form">
+                <button type="submit" class="btn-delete" onclick="return confirm('Are you sure?')">Delete Post</button>
+            </form>
+        </div>
+    <% } %>
+</article>
+
+<%- include('partials/footer') %>
